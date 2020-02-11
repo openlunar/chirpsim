@@ -54,20 +54,42 @@ for index, t in np.ndenumerate(x):
     decoded[index] = shifted_output[index] / decode_lo[index] if decode_lo[index] else 0
 
 
-ax1 = plt.subplot(511)
-plt.plot(x, signal)
+# ax1 = plt.subplot(511)
+# ax1.set_title("kdj")
+# plt.plot(x, signal)
+#
+# ax2 = plt.subplot(512, sharex=ax1, title="kjdfgndf")
+# plt.plot(x, encode_lo)
+#
+# ax3 = plt.subplot(513, sharex=ax2)
+# plt.plot(x, output)
+#
+# ax4 = plt.subplot(514, sharex=ax3)
+# plt.plot(x, shifted_output)
+#
+# ax5 = plt.subplot(515, sharex=ax4)
+# plt.plot(x, decoded)
 
-ax2 = plt.subplot(512, sharex=ax1)
-plt.plot(x, encode_lo)
 
-ax3 = plt.subplot(513, sharex=ax2)
-plt.plot(x, output)
+fig, axs = plt.subplots(5, 1)
+axs[0].plot(x, signal)
+axs[0].set_title('Axis [0,0]')
+axs[1].plot(x, encode_lo, 'tab:orange')
+axs[1].set_title('Axis [0,1]')
+axs[2].plot(x, output, 'tab:green')
+axs[2].set_title('Axis [1,0]')
+axs[3].plot(x, shifted_output, 'tab:red')
+axs[3].set_title('Axis [1,1]')
+axs[4].plot(x, decoded, 'tab:red')
+axs[4].set_title('Axis [1,1]')
 
-ax4 = plt.subplot(514, sharex=ax3)
-plt.plot(x, shifted_output)
 
-ax5 = plt.subplot(515, sharex=ax4)
-plt.plot(x, decoded)
+for ax in axs.flat:
+    ax.set(xlabel='x-label', ylabel='y-label')
+
+# Hide x labels and tick labels for top plots and y ticks for right plots.
+for ax in axs.flat:
+    ax.label_outer()
 
 plt.ylim(-1,1)
 
