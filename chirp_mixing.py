@@ -24,14 +24,15 @@ encode_lo = np.zeros(size)
 output = np.zeros(size)
 
 decode_lo = np.zeros(size)
-decoded = np.zeros(size)
+unmixed = np.zeros(size)
+unmixed_uncorrected = np.zeros(size)
 
 delta_t = t_max / size
 
 f_scan = 0
 angle = 0
 
-doppler = 0.001
+doppler = 0.01
 
 for index, t in np.ndenumerate(x):
 
@@ -51,46 +52,27 @@ shifted_output = np.interp(shifted_x, x, output)
 for index, t in np.ndenumerate(x):
     
     decode_lo[index] = np.sin(t*2*np.pi*lo_f*(1+doppler))
-    decoded[index] = shifted_output[index] / decode_lo[index] if decode_lo[index] else 0
+    unmixed[index] = shifted_output[index] / decode_lo[index] if decode_lo[index] else 0
+    unmixed_uncorrected[index] = shifted_output[index] / encode_lo[index] if encode_lo[index] else 0
 
-
-# ax1 = plt.subplot(511)
-# ax1.set_title("kdj")
-# plt.plot(x, signal)
-#
-# ax2 = plt.subplot(512, sharex=ax1, title="kjdfgndf")
-# plt.plot(x, encode_lo)
-#
-# ax3 = plt.subplot(513, sharex=ax2)
-# plt.plot(x, output)
-#
-# ax4 = plt.subplot(514, sharex=ax3)
-# plt.plot(x, shifted_output)
-#
-# ax5 = plt.subplot(515, sharex=ax4)
-# plt.plot(x, decoded)
-
-
-fig, axs = plt.subplots(5, 1)
+fig, axs = plt.subplots(6, 1)
 axs[0].plot(x, signal)
-axs[0].set_title('Axis [0,0]')
+axs[0].set_title('Chirp ' + str(f_center) + 'hz center, ' + str(bw) + 'hz BW')
 axs[1].plot(x, encode_lo, 'tab:orange')
-axs[1].set_title('Axis [0,1]')
+axs[1].set_title('LO ' + str(lo_f) + 'hz')
 axs[2].plot(x, output, 'tab:green')
-axs[2].set_title('Axis [1,0]')
+axs[2].set_title('Mixed Signal')
 axs[3].plot(x, shifted_output, 'tab:red')
-axs[3].set_title('Axis [1,1]')
-axs[4].plot(x, decoded, 'tab:red')
-axs[4].set_title('Axis [1,1]')
-
+axs[3].set_title('Mixed Signal w/ ' + str(doppler*100) + '% Doppler Shift')
+axs[4].plot(x, unmixed, 'tab:blue')
+axs[4].set_title('De-Mixed Signal w/ Shifted LO')
+axs[5].plot(x, unmixed_uncorrected, 'tab:blue')
+axs[5].set_title('De-Mixed Signal w/ Original LO')
 
 for ax in axs.flat:
-    ax.set(xlabel='x-label', ylabel='y-label')
+    ax.set(xlabel='Time (Seconds)', ylabel='Amplitude')
+    ax.label_outer() # Hide x labels and tick labels for top plots and y ticks for right plots.
 
-# Hide x labels and tick labels for top plots and y ticks for right plots.
-for ax in axs.flat:
-    ax.label_outer()
-
-plt.ylim(-1,1)
-
+plt.ylim(-1, 1)
+plt.tight_layout()
 plt.show()
