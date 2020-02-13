@@ -13,6 +13,9 @@ f_rate = 150
 # lo characteristics
 lo_f = 150
 
+# de-mix lo
+phase = 0
+
 size = 30000
 
 x = np.linspace(0.0, t_max, size)
@@ -48,10 +51,11 @@ for index, t in np.ndenumerate(x):
     f_scan = (f_scan + delta_t*f_rate)
 
 shifted_output = np.interp(shifted_x, x, output)
+phase_offset = phase * 2 * np.pi
 
 for index, t in np.ndenumerate(x):
     
-    decode_lo[index] = np.sin(t*2*np.pi*lo_f*(1+doppler))
+    decode_lo[index] = np.sin(t*2*np.pi*lo_f*(1+doppler) + phase_offset)
     unmixed[index] = shifted_output[index] / decode_lo[index] if decode_lo[index] else 0
     unmixed_uncorrected[index] = shifted_output[index] / encode_lo[index] if encode_lo[index] else 0
 
@@ -94,6 +98,7 @@ axs[5].set_title('De-Mixed Signal w/ Original LO')
 for ax in axs.flat:
     ax.set(xlabel='Time (Seconds)', ylabel='Amplitude')
     ax.label_outer() # Hide x labels and tick labels for top plots and y ticks for right plots.
+    ax.set_ylim(-1, 1)
 
 plt.ylim(-1, 1)
 plt.tight_layout()
