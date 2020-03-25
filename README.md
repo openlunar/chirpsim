@@ -5,6 +5,7 @@ A super low fidelity time simulation of a chirp signal and doppler shifting.
 * Python 3.x
 * Numpy
 * Matplotlib
+* Scipy
 
 ## Installation
 Clone this repository:
