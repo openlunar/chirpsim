@@ -22,3 +22,12 @@ Navigate to the repo's root folder, and run chirpsim.py with no arguments:
 
     cd chirpsim/
     python chirpsim.py
+
+## Output
+The following plots should show up:
+
+A plot of the time domain:\
+![Time Plot](https://raw.githubusercontent.com/openlunar/chirpsim/5f84682ccab8df515a7ad022e1eae25135d96141/t_plot.png)
+
+A plot of the frequency domain:\
+![Frequency Plot](https://raw.githubusercontent.com/openlunar/chirpsim/5f84682ccab8df515a7ad022e1eae25135d96141/f_plot.png)
