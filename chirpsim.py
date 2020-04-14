@@ -142,9 +142,9 @@ def main(args):
     plt.show()
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Process some integers.')
+    parser = argparse.ArgumentParser(description='A super low fidelity time simulation of a chirp signal and doppler shifting.')
     parser.add_argument('-t', '--t-maxx', type=float, dest='t_max', default=1.0,
-                        help='total simulation time')
+                        help='total simulation time, in seconds')
     parser.add_argument('-s', '--time-steps', type=int, dest='size', default=300000,
                         help='number of timesteps')
     parser.add_argument('-d', '--doppler', type=float, dest='doppler', default=25.0,
