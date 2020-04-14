@@ -7,7 +7,7 @@ understanding of signal mixing, by showing what a significant bandwidth signal
     - aka [mixed](https://wikipedia.org/wiki/Frequency_mixer), and band-pass filtered for f<sub>LO</sub>+f<sub>IF</sub>
 - When [doppler shifted](https://wikipedia.org/wiki/Doppler_effect)
 - When downconverted...
-    - aka de-mixed with an [LO](https://wikipedia.org/wiki/Local_oscillator)
+    - aka mixed with an [LO](https://wikipedia.org/wiki/Local_oscillator)
 that's corrected and uncorrected for the doppler shift/distortion, and band-pass filtered for f<sub>RF</sub>-f<sub>LO</sub>
 
 The following is a color-coded diagram of what the script simulates, corresponding to
